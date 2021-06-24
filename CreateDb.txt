@@ -1,0 +1,20 @@
+import java.sql.*;
+class CreateDb
+{
+    public static void main(String[] args) 
+    {
+        Connection con;
+        Statement st;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root&password=adarsh");
+            st=con.createStatement();
+            st.execute("create database bankdb;");
+            System.out.print("Database Created Successfully");
+        }   
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+import java.sql.*;
+import java.io.*;
+class InsertData
+{
+public static void main(String args[])
+{
+InputStreamReader isr = new InputStreamReader(System.in);
+BufferedReader br = new BufferedReader(isr);
+int eid;
+String enm;
+String actype;
+Double balance;
+
+Connection  con;
+PreparedStatement pst;
+try
+{
+System.out.print("Enter Account Number : ");
+eid = Integer.parseInt(br.readLine());
+System.out.print("Enter Your Name : ");
+enm = br.readLine();
+System.out.print("Enter Account Type : ");
+actype = br.readLine();
+System.out.print("Enter Your Balance : ");
+balance = Double.parseDouble(br.readLine());
+
+Class.forName("com.mysql.cj.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb?user=root&password=adarsh");
+pst = con.prepareStatement("insert into accounts values(?,?,?,?)");
+pst.setInt(1,eid);
+pst.setString(2,enm);
+pst.setString(3, actype);
+pst.setDouble(4,balance);
+
+pst.executeUpdate();
+System.out.println("Account opened Successfully");
+con.close();
+}
+catch(Exception e)
+{
+System.out.println(e.getMessage());
+}
+}
+}

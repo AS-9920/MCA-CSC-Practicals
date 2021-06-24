@@ -1,0 +1,47 @@
+import java.sql.*;
+import java.util.*;
+class UpdateDataTrans 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+
+        int eid;
+        String trtype;
+        double balance;
+        Connection con;
+        PreparedStatement pst;
+        
+        try{
+            System.out.println("Enter Transaction Type(Deposit/Withdraw) : ");
+            trtype = sc.nextLine();
+            System.out.println("Enter Account  Number");
+            eid = sc.nextInt();
+            System.out.println("Enter Amount : ");
+            balance = sc.nextDouble();
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb?user=root&password=adarsh");
+            if(trtype.equalsIgnoreCase("deposit"))
+            pst = con.prepareStatement("update accounts set balance = balance+? where eid = ?");
+            else
+            pst = con.prepareStatement("update accounts set balance = balance-? where eid=?");
+            pst.setDouble(1,balance);
+            pst.setInt(2,eid);
+            int cnt=pst.executeUpdate();
+            if(cnt==0)
+            {
+                System.out.println("Account Does Not Exist..");
+            }
+            else
+            {
+                System.out.println("Balance Updated Successfully..");
+            }
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Invalid Input..");
+        }
+    }
+}
