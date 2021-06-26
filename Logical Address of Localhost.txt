@@ -1,0 +1,23 @@
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+class AddLocal 
+{
+    public static void main(String[] args)throws Exception
+    {
+        InetAddress addr = InetAddress.getLocalHost();
+        System.out.println("Local HostAddress :"+addr.getHostAddress());
+        String hostname = addr.getHostName();
+        System.out.println("Local host name "+hostname);
+        String st = "https://www.google.com";
+        try
+        {
+            InetAddress ip = InetAddress.getByName(new URL(st).getHost());
+            System.out.println("Website IP address is " +ip);
+        }
+        catch(MalformedURLException ex)
+        {
+            System.out.println("Not Found Url");
+        }
+    }
+}
